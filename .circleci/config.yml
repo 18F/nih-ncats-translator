@@ -1,0 +1,18 @@
+version: 2.1
+
+orbs:
+  cloudfoundry: circleci/cloudfoundry@0.1.46
+
+workflows:
+  deploy:
+    jobs:
+      - cloudfoundry/push:
+          filters:
+            branches:
+              only: [ master ]
+          appname: nih-ncats-translator
+          manifest: manifest.yml
+          endpoint: https://api.fr.cloud.gov
+          org: sandbox-gsa
+          space: andrew.dunkman
+  version: 2
