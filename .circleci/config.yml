@@ -9,6 +9,7 @@ jobs:
       CF_SPACE: andrew.dunkman
       CF_APP: nih-ncats-translator
     steps:
+      - checkout
       - run:
           name: Setup Cloud Foundry CLI
           command: |
@@ -26,7 +27,7 @@ jobs:
       - run:
           name: Perform zero-downtime deploy
           command: |
-            cf zero-downtime-push "$CF_APP"
+            cf zero-downtime-push "$CF_APP" -f manifest.yml
 
 workflows:
   version: 2
