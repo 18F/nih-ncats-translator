@@ -2,9 +2,6 @@ version: 2
 
 jobs:
   deploy:
-    branches:
-      only:
-        - master
     docker:
       - image: node:10
     environment:
@@ -30,3 +27,13 @@ jobs:
           name: Perform zero-downtime deploy
           command: |
             cf zero-downtime-push "$CF_APP"
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
