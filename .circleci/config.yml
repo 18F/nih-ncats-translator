@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Perform zero-downtime deployment (zero-downtime-push)
           command: |
-            cf zero-downtime-push "$CF_APP"
+            cf zero-downtime-push "$CF_APP" -f manifest.yml
 
 workflows:
   version: 2
