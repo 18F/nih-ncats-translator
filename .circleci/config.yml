@@ -1,18 +1,32 @@
-version: 2.1
+version: 2
 
-orbs:
-  cloudfoundry: circleci/cloudfoundry@0.1.46
-
-workflows:
+jobs:
   deploy:
-    jobs:
-      - cloudfoundry/push:
-          filters:
-            branches:
-              only: [ master ]
-          appname: nih-ncats-translator
-          manifest: manifest.yml
-          endpoint: https://api.fr.cloud.gov
-          org: sandbox-gsa
-          space: andrew.dunkman
-  version: 2
+    branches:
+      only:
+        - master
+    docker:
+      - image: node:10
+    environment:
+      CF_ORG: sandbox-gsa
+      CF_SPACE: andrew.dunkman
+      CF_APP: nih-ncats-translator
+    steps:
+      - run:
+          name: Setup Cloud Foundry CLI
+          command: |
+            curl -v -L -o cf-cli_amd64.deb "https://cli.run.pivotal.io/stable?release=debian64&source=github"
+            dpkg -i cf-cli_amd64.deb
+            cf -v
+            cf api https://api.fr.cloud.gov
+            cf auth "$CF_USERNAME" "$CF_PASSWORD"
+            cf target -o "$CF_ORG" -s "$CF_SPACE"
+      - run:
+          name: Setup Autopilot Cloud Foundry plugin
+          command: |
+            curl -v -L -o autopilot-linux "https://github.com/contraband/autopilot/releases/download/0.0.8/autopilot-linux"
+            cf install-plugin autopilot-linux
+      - run:
+          name: Perform zero-downtime deploy
+          command: |
+            cf zero-downtime-push "$CF_APP"
