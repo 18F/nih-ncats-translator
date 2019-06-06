@@ -22,7 +22,7 @@ jobs:
           name: Setup Autopilot Cloud Foundry plugin
           command: |
             curl -v -L -o autopilot-linux "https://github.com/contraband/autopilot/releases/download/0.0.8/autopilot-linux"
-            cf install-plugin autopilot-linux
+            cf install-plugin -f autopilot-linux
       - run:
           name: Perform zero-downtime deploy
           command: |
