@@ -20,14 +20,14 @@ jobs:
             cf auth "$CF_USERNAME" "$CF_PASSWORD"
             cf target -o "$CF_ORG" -s "$CF_SPACE"
       - run:
-          name: Setup Autopilot Cloud Foundry plugin
+          name: Setup Autopilot Cloud Foundry CLI plugin
           command: |
             curl -v -L -o autopilot-linux "https://github.com/contraband/autopilot/releases/download/0.0.8/autopilot-linux"
             cf install-plugin -f autopilot-linux
       - run:
-          name: Perform zero-downtime deploy
+          name: Perform zero-downtime deployment (zero-downtime-push)
           command: |
-            cf zero-downtime-push "$CF_APP" -f manifest.yml
+            cf zero-downtime-push "$CF_APP"
 
 workflows:
   version: 2
