@@ -5,8 +5,8 @@ jobs:
     docker:
       - image: node:10
     environment:
-      CF_ORG: sandbox-gsa
-      CF_SPACE: andrew.dunkman
+      CF_ORG: ncats-prototyping
+      CF_SPACE: Informatics
       CF_APP: nih-ncats-translator
     steps:
       - checkout
