@@ -7,7 +7,7 @@ jobs:
     environment:
       CF_ORG: ncats-prototyping
       CF_SPACE: Informatics
-      CF_APP: nih-ncats-translator
+      CF_APP: nih-ncats-translator-prototype
     steps:
       - checkout
       - run:
