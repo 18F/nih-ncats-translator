@@ -1,0 +1,48 @@
+{
+  "name": "nih-ncats-translator",
+  "version": "0.1.0",
+  "private": true,
+  "license": "CC0-1.0",
+  "homepage": "https://nih-ncats-translator-prototype.app.cloud.gov",
+  "bugs": {
+    "url": "https://github.com/18F/nih-ncats-translator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/18F/nih-ncats-translator.git"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "reports/jest",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{filepath}",
+    "addFileAttribute": true,
+    "includeConsoleOutput": true
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "jest-junit": "^6.4.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
+  }
+}

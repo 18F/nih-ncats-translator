@@ -6,7 +6,15 @@ The [National Center for Advancing Translational Sciences (NCATS)](https://ncats
 
 ## Running in development
 
-Currently this project is static HTML with no build process — see [public/](public/).
+After checking out this code, run `npm install` to install dependencies, and then start the app with `npm start`.
+
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- The page will reload if you make edits.
+- You will also see any lint errors in the console.
+
+### Running the tests
+
+Launch the test runner in the interactive watch mode with `npm test`. Read more about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) in the React documentation.
 
 ## How to deploy
 
