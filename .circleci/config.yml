@@ -42,6 +42,15 @@ jobs:
           path: coverage
           destination: coverage
 
+  lint:
+    docker:
+      - image: node:10
+    steps:
+      - checkout-and-install
+      - run:
+          name: Run code linters
+          command: npm run lint
+
   build:
     docker:
       - image: node:10
@@ -96,11 +105,13 @@ workflows:
     jobs:
       - build
       - test
+      - lint
       - coverage
       - deploy:
           requires:
             - build
             - test
+            - lint
             - coverage
           filters:
             branches:
