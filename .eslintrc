@@ -1,14 +1,17 @@
 {
-  "extends": "airbnb-base",
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "airbnb-base",
+    "react-app"
+  ],
   "env": {
     "browser": true
   },
   "rules": {
-    "import/extensions": [
-      "error",
-      {
-        "js": "always"
-      }
-    ]
+    "import/no-extraneous-dependencies": {
+      "devDependencies": true
+    }
   }
 }
