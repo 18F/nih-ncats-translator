@@ -3,8 +3,12 @@ import React from 'react';
 function App() {
   return (
     <React.Fragment>
-      <h1>Hello world!</h1>
-      <p><span role="img" aria-label="waving hello">👋</span></p>
+      <main id="main-content">
+        <section className="usa-section grid-container">
+          <h1>Hello world!</h1>
+          <p><span role="img" aria-label="waving hello">👋</span></p>
+        </section>
+      </main>
     </React.Fragment>
   );
 }
