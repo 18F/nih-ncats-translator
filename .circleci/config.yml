@@ -6,24 +6,38 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-v1-{{ checksum "package-lock.json" }}
+          key: dependency-cache-v2-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
           command: npm ci --dev
       - save_cache:
-          key: dependency-cache-v1-{{ checksum "package-lock.json" }}
+          key: dependency-cache-v2-{{ checksum "package-lock.json" }}
           paths:
             - ~/.npm
 
 jobs:
   test:
     docker:
-      - image: node:10
+      - image: circleci/node:10-browsers
     steps:
       - checkout-and-install
       - run:
           name: Run tests
-          command: npm test -- --reporters=default --reporters=jest-junit
+          command: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: reports
+          destination: reports
+
+  e2e:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout-and-install
+      - run:
+          name: Run end-to-end tests
+          command: npm run e2e -- --prod --protractor-config=e2e/protractor-ci.conf.js
       - store_test_results:
           path: reports
       - store_artifacts:
@@ -32,19 +46,19 @@ jobs:
 
   coverage:
     docker:
-      - image: node:10
+      - image: circleci/node:10-browsers
     steps:
       - checkout-and-install
       - run:
           name: Generate code coverage reports
-          command: npm test -- --coverage
+          command: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage
       - store_artifacts:
           path: coverage
           destination: coverage
 
   lint:
     docker:
-      - image: node:10
+      - image: circleci/node:10-browsers
     steps:
       - checkout-and-install
       - run:
@@ -53,7 +67,7 @@ jobs:
 
   build:
     docker:
-      - image: node:10
+      - image: circleci/node:10-browsers
     environment:
       NODE_ENV: production
     steps:
@@ -62,16 +76,16 @@ jobs:
           name: Run production build
           command: npm run build
       - store_artifacts:
-          path: build
-          destination: build
+          path: dist
+          destination: dist
       - persist_to_workspace:
           root: ./
           paths:
-            - build
+            - dist
 
   deploy:
     docker:
-      - image: node:10
+      - image: circleci/node:10-browsers
     environment:
       CF_ORG: ncats-prototyping
       CF_SPACE: Informatics
@@ -105,12 +119,14 @@ workflows:
     jobs:
       - build
       - test
+      - e2e
       - lint
       - coverage
       - deploy:
           requires:
             - build
             - test
+            - e2e
             - lint
             - coverage
           filters:
